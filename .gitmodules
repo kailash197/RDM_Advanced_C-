@@ -1,0 +1,3 @@
+[submodule "modern_cpp_course"]
+	path = modern_cpp_course
+	url = https://bitbucket.org/theconstructcore/modern_cpp_course.git
