@@ -1,3 +1,11 @@
+# Ignore build directory
+build/
+#
+# # Ignore include directory
+include/
+CMakeFiles/
+#
+
 # Prerequisites
 *.d
 
