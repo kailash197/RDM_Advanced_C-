@@ -5,8 +5,10 @@
 int main(int argc, char **argv) {
   ros::init(argc, argv, "robot_manager");
   ros::NodeHandle nh;
-  RobotManager robot(&nh, "/robot1/odom", "my_bot", "TurtleBot3");
-  robot.print_specifications();
+  RobotManager robot1(&nh, "/robot1/odom", "Turtle_1", "TurtleBot3");
+  robot1.print_specifications();
+  RobotManager robot2(&nh, "/robot2/odom", "Turtle_2", "TurtleBot3");
+  robot2.print_specifications();
   ros::spin();
   return 0;
 }

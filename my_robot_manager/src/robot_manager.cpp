@@ -5,7 +5,7 @@ RobotManager::RobotManager(ros::NodeHandle *nh, std::string topic,
     : odom_topic(topic), robot_name(name), robot_model(model) {
   odom_sub =
       nh->subscribe(odom_topic, 1000, &RobotManager::odom_callback, this);
-  ROS_INFO("Robot initialized.");
+  ROS_INFO("Robot %d initialized.", ++robot_count);
 }
 void RobotManager::odom_callback(const nav_msgs::Odometry::ConstPtr &msg) {
   ROS_INFO("%s position (x,y): %lf , %lf", robot_name.c_str(),
@@ -17,3 +17,4 @@ void RobotManager::print_specifications() {
   ROS_INFO("Battery Capacity (kWh): %.2f", battery_capacity_kwh);
   ROS_INFO("Total Operation Hours: %d", total_operation_hours);
 }
+int RobotManager::robot_count = 0;
