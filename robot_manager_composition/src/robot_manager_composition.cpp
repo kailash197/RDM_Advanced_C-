@@ -1,19 +1,47 @@
 #include "robot_manager_composition/robot_manager_composition.h"
+#include "robot_manager_composition/system_information.h"
+#include <ros/ros.h>
 
-RobotManagerComposition::RobotManagerComposition()
-    : nh_(), service_server_(nh_.advertiseService(
-                 "/robot_manager_output",
-                 &RobotManagerComposition::service_callback_, this)) {
-  ROS_INFO("Service started: /robot_manager_output");
+RobotManagerComposition::RobotManagerComposition(ros::NodeHandle *node_handle) {
+  nh = node_handle;
+  init_config_output_srv();
+}
+RobotManagerComposition::RobotManagerComposition(ros::NodeHandle *node_handle,
+                                                 ComputerUnit computer_unit) {
+  nh = node_handle;
+  init_config_output_srv();
+  c_unit = computer_unit;
 }
 
-bool RobotManagerComposition::service_callback_(
-    std_srvs::SetBool::Request &req, std_srvs::SetBool::Response &res) {
-  this->output_enabled = req.data;
-  res.success = true;
-  res.message =
-      (req.data) ? "Console output enabled." : "Console output disabled.";
-  ROS_INFO("Console output enabled: %s",
-           this->output_enabled ? "true" : "false");
+void RobotManagerComposition::init_config_output_srv() {
+  config_output_srv = nh->advertiseService(
+      "robot_manager_output", &RobotManagerComposition::ConfigOutputCallback,
+      this);
+  ROS_INFO("Enable output service created");
+}
+
+bool RobotManagerComposition::ConfigOutputCallback(
+    std_srvs::SetBoolRequest &req, std_srvs::SetBoolResponse &response) {
+  bool request = req.data;
+
+  // Check if request is same as current output configuration
+  if (request == output_enabled) {
+    response.success = false;
+    response.message = "Output configuration request is the same as the "
+                       "current output configuration.";
+    return true;
+  }
+
+  response.success = true;
+  output_enabled = request;
+  if (output_enabled == false) {
+    response.message = "Console output disabled.";
+    ROS_INFO("Robot Manager console output disabled.");
+  } else {
+    response.message = "Console output enabled.";
+    ROS_INFO("Robot Manager console output enabled.");
+    // Print CPU and RAM information
+    c_unit.print_info();
+  }
   return true;
 }
