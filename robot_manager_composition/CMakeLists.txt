@@ -152,6 +152,10 @@ include
 # Add standalone executable file
 add_executable(system_information_test src/system_information_test_executable.cpp src/system_information.cpp)
 target_link_libraries(system_information_test ${catkin_LIBRARIES})
+
+add_executable(robot_manager_composition_node src/robot_manager_composition.cpp src/robot_manager_composition_node.cpp)
+target_link_libraries(robot_manager_composition_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
