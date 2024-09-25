@@ -21,3 +21,9 @@ void RobotManagerMobile::odom_callback(
     ROS_INFO("Position (x,y): %.6f , %.6f", x, y);
   }
 }
+
+void RobotManagerMobile::displayRobotDetails() {
+  RobotManagerBase::displayRobotDetails();
+  ROS_INFO("Battery Charge Level: %lf", battery_charge_level);
+  ROS_INFO("Type of Battery: %s", type_of_battery.c_str());
+}
