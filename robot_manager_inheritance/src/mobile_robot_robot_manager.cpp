@@ -4,4 +4,20 @@
 RobotManagerMobile::RobotManagerMobile(ros::NodeHandle *node_handle_) {
   nh_ = node_handle_;
   init_config_output_srv();
+  init_odom_subscriber();
+}
+
+void RobotManagerMobile::init_odom_subscriber() {
+  odom_subscriber = nh_->subscribe(odometry_topic, 1000,
+                                   &RobotManagerMobile::odom_callback, this);
+  ROS_INFO("Base Odometry Subscriber Initialized: %s", odometry_topic.c_str());
+}
+
+void RobotManagerMobile::odom_callback(
+    const nav_msgs::Odometry::ConstPtr &msg) {
+  if (output_enabled) {
+    float x = msg->pose.pose.position.x;
+    float y = msg->pose.pose.position.y;
+    ROS_INFO("Position (x,y): %.6f , %.6f", x, y);
+  }
 }
