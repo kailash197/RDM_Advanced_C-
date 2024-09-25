@@ -153,6 +153,9 @@ include_directories(
 add_executable(base_robot_manager_node src/base_robot_manager.cpp src/base_robot_manager_node.cpp)
 target_link_libraries(base_robot_manager_node ${catkin_LIBRARIES})
 
+add_executable(mobile_robot_robot_manager_node src/base_robot_manager.cpp  src/mobile_robot_robot_manager.cpp src/mobile_robot_robot_manager_node.cpp)
+target_link_libraries(mobile_robot_robot_manager_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
