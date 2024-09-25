@@ -18,7 +18,7 @@ protected:
   std::string robot_location = "Everest";
   bool output_enabled = false;
   void init_config_output_srv();
-  virtual void displayRobotDetails();
+  virtual void displayRobotDetails() = 0;
 
 public:
   RobotManagerBase(){};

@@ -23,7 +23,8 @@ void RobotManagerMobile::odom_callback(
 }
 
 void RobotManagerMobile::displayRobotDetails() {
-  RobotManagerBase::displayRobotDetails();
+  ROS_INFO("Robot Name: %s", robot_name.c_str());
+  ROS_INFO("Robot Location: %s", robot_location.c_str());
   ROS_INFO("Battery Charge Level: %lf", battery_charge_level);
   ROS_INFO("Type of Battery: %s", type_of_battery.c_str());
 }
